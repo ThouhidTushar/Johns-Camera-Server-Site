@@ -22,7 +22,7 @@ async function run() {
 		await client.connect();
 		const database = client.db('johnsCamera');
 		const productCollection = database.collection('products');
-		const productCollection = database.collection('allProducts');
+		const allProductsCollection = database.collection('allProducts');
 
 		console.log('database connected successfully');
 
@@ -35,7 +35,7 @@ async function run() {
 
 		// get allProducts api 
 		app.get('/allProducts', async (req, res) => {
-			const cursor = allProductCollection.find({});
+			const cursor = allProductsCollection.find({});
 			const allProducts = await cursor.toArray();
 			res.send(allProducts);
 		})
