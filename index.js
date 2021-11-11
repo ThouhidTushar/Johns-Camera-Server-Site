@@ -22,6 +22,8 @@ async function run() {
 		await client.connect();
 		const database = client.db('johnsCamera');
 		const productCollection = database.collection('products');
+		const productCollection = database.collection('allProducts');
+
 		console.log('database connected successfully');
 
 		// get products api 
@@ -31,10 +33,18 @@ async function run() {
 			res.send(products);
 		})
 
+		// get allProducts api 
+		app.get('/allProducts', async (req, res) => {
+			const cursor = allProductCollection.find({});
+			const allProducts = await cursor.toArray();
+			res.send(allProducts);
+		})
+
 	}
 	finally {
 		// await client.close();
 	}
+
 }
 run().catch(console.dir);
 
