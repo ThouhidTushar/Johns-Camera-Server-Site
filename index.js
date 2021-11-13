@@ -23,6 +23,9 @@ client.connect((err) => {
 	const productCollection = client.db("johnsCamera").collection("products");
 	const allProductsCollection = client.db("johnsCamera").collection("allProducts");
 	const reviewCollection = client.db("johnsCamera").collection("review");
+	const orderCollection = client.db("johnsCamera").collection("orders");
+
+
 
 	console.log('database connected successfully, yey!');
 
@@ -40,54 +43,77 @@ client.connect((err) => {
 		res.send(result);
 	});
 
-	// add service
+
+	// single product
+
+	app.get("/singleProduct/:id", async (req, res) => {
+		// console.log(req.params.id);
+		const result = await productCollection
+			.find({ _id: ObjectId(req.params.id) })
+			.toArray();
+		res.send(result[0]);
+		// console.log(result[0]);
+	})
+
+
+	// confirm order
+	app.post("/confirmOrder", async (req, res) => {
+		const result = await orderCollection.insertOne(req.body);
+		res.send(result);
+	});
+
+	// my confirmOrder
+
+	app.get("/myOrders/:email", async (req, res) => {
+		const result = await orderCollection
+			.find({ email: req.params.email })
+			.toArray();
+		res.send(result);
+	});
+
+	// delete order
+
+	app.delete("/deleteOrder/:id", async (req, res) => {
+		const result = await orderCollection.deleteOne({
+			_id: ObjectId(req.params.id),
+		});
+		res.send(result);
+	});
+
+
+	app.delete("/deleteAllOrder/:id", async (req, res) => {
+		const result = await orderCollection.deleteOne({
+			_id: ObjectId(req.params.id),
+		});
+		res.send(result);
+	});
+
+
+	// add review
 
 	app.post("/review", async (req, res) => {
 		const result = await reviewCollection.insertOne(req.body);
 		res.send(result);
-		console.log(result);
+
 	});
 
 	// get all reviews
 	app.get("/allReview", async (req, res) => {
 		const result = await reviewCollection.find({}).toArray();
 		res.send(result);
-		console.log(result);
+
 	});
 
 
+	// get all Orders
+	app.get("/allOrders", async (req, res) => {
+		const result = await orderCollection.find({}).toArray();
+		res.send(result);
+		console.log(result);
+	});
+
 });
 
-
-
-// async function run() {
-// 	try {
-// 		await client.connect();
-// 		const database = client.db('johnsCamera');
-// 		const productCollection = database.collection('products');
-// 		const allProductsCollection = database.collection('allProducts');
-
-// 		const reviewCollection = database.collection('addReview');
-
-// 		console.log('database connected successfully, yey!');
-
-// 		// users: get
-// 		// users : post 
-
-
-// 		// get products api 
-// 		app.get('/products', async (req, res) => {
-// 			const cursor = productCollection.find({});
-// 			const products = await cursor.toArray();
-// 			res.send(products);
-// 		})
-
-// 		// get allProducts api 
-// 		app.get('/allProducts', async (req, res) => {
-// 			const cursor = allProductsCollection.find({});
-// 			const allProducts = await cursor.toArray();
-// 			res.send(allProducts);
-// 		})
 
 // 	}
 // 	finally {
