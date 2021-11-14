@@ -17,3 +17,6 @@
 
 - Logins are managed with google and User/Password method. 
 
+### description
+
+- Johns Camera is not a big box store, or a faceless chain. or a personality-free zone. Johns Camera is a group of people who are passionate about the things you're passionate about—from photography, film, music and audio to art and technology, creating and imagining.We believe in making customers, not sales. That's why we've perfected the "art of the downsell": we'll always recommend the best options based on your specific needs, rather than the price tag. The customer comes first, second and third at Johns Camera.
